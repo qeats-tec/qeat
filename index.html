@@ -7,25 +7,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f19;             /* Derin siberpunk gece arka planı */
-      --card-bg: rgba(18, 26, 47, 0.6); /* Transparan koyu cam kartlar */
-      --accent: #a68a64;        /* Altın/Yumuşak kahve vurgu rengi */
+      --bg: #0b0f19;             
+      --card-bg: rgba(18, 26, 47, 0.6); 
+      --accent: #a68a64;        
       --accent-glow: rgba(166, 138, 100, 0.25);
-      --secondary: #4f6b9e;     /* İkincil yumuşak mavi/gri tonu */
-      --text: #f3f4f6;          /* Net okunabilir açık gri ana metin */
-      --muted: #9ca3af;         /* İkincil açıklamalar için orta gri */
-      --border: rgba(255, 255, 255, 0.08); /* Modern, ince border */
+      --secondary: #4f6b9e;     
+      --text: #f3f4f6;          
+      --muted: #9ca3af;         
+      --border: rgba(255, 255, 255, 0.08); 
     }
 
     * { 
       box-sizing: border-box; 
       margin: 0;
       padding: 0;
-      cursor: none !important; /* Özel imleç aktifken varsayılanı gizle */
+      cursor: none !important; 
     }
 
-    /* Transition her şeye uygulanırsa imleci de yavaşlatır, o yüzden seçici ayırdık */
-    body, header, .card, .btn-link, #langBtn, #langMenu li {
+    body, header, .card, .btn-link, #langBtn, .action-btn, #langMenu li {
       transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -39,12 +38,10 @@
       pointer-events: none;
       z-index: 10000;
       transform: translate(-10%, -10%); 
-      will-change: left, top; /* Performans optimizasyonu */
+      will-change: left, top;
     }
 
-    .cursor-click {
-      transform: scale(0.8) rotate(-10deg) !important;
-    }
+    .cursor-click { transform: scale(0.8) rotate(-10deg) !important; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -72,7 +69,6 @@
       align-items: center;
       gap: 12px;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
 
     #musicBtn {
@@ -83,10 +79,6 @@
       font-weight: 800;
       font-size: 11px;
       color: var(--bg);
-    }
-    #musicBtn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px var(--accent-glow);
     }
 
     /* --- NAVIGASYON --- */
@@ -114,10 +106,31 @@
       text-transform: uppercase;
       letter-spacing: 3px;
       color: var(--accent);
-      text-shadow: 0 0 15px var(--accent-glow);
     }
 
-    .lang-wrapper { position: relative; }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .action-btn {
+      background: rgba(166, 138, 100, 0.1);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .action-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
     #langBtn {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
@@ -125,14 +138,12 @@
       padding: 8px 16px;
       border-radius: 12px;
       font-weight: 600;
-      font-size: 0.9rem;
     }
-    #langBtn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    #langBtn:hover { background: rgba(255,255,255,0.08); }
 
     #langMenu {
       position: absolute;
-      right: 0; 
-      top: 45px;
+      right: 0; top: 45px;
       background: #121a33;
       border: 1px solid var(--border);
       list-style: none;
@@ -163,7 +174,7 @@
     }
     .hero p { color: var(--muted); font-size: 1.2rem; max-width: 600px; margin: auto; }
 
-    section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
+    section { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
     h2 {
       font-size: 1.6rem;
       margin-bottom: 35px;
@@ -171,7 +182,6 @@
       align-items: center;
       gap: 15px;
       font-weight: 800;
-      letter-spacing: 1px;
     }
     h2::after { content: ""; height: 1px; flex: 1; background: var(--border); }
 
@@ -194,8 +204,8 @@
     }
     .card:hover {
       border-color: var(--accent);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px var(--accent-glow);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
     }
     .card-content { flex-grow: 1; }
     .card b { color: var(--accent); display: block; margin-bottom: 12px; font-size: 1.25rem; font-weight: 600; }
@@ -221,7 +231,39 @@
     }
     .btn-link:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-    @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* --- DINAMIK KELIME LISTESI ALANI --- */
+    .words-container {
+      background: rgba(18, 26, 47, 0.4);
+      border: 1px dashed var(--border);
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 20px;
+      display: none; 
+      animation: slideUp 0.3s ease forwards;
+    }
+    .words-container.active { display: block; }
+    .words-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .word-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .word-badge:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(166, 138, 100, 0.05);
+    }
+
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 600px) {
       .hero { padding: 80px 20px 40px; }
@@ -246,21 +288,34 @@
 <header>
   <div class="nav">
     <div class="logo">QEAT</div>
-    <div class="lang-wrapper">
-      <button id="langBtn">Language: EN</button>
-      <ul id="langMenu">
-        <li data-lang="en">English</li>
-        <li data-lang="tr">Türkçe</li>
-      </ul>
+    <div class="nav-controls">
+      <!-- CARDS BUTONU -->
+      <button id="cardsBtn" class="action-btn">Card's</button>
+      
+      <div class="lang-wrapper">
+        <button id="langBtn">Language: EN</button>
+        <ul id="langMenu">
+          <li data-lang="en">English</li>
+          <li data-lang="tr">Türkçe</li>
+        </ul>
+      </div>
     </div>
   </div>
 </header>
+
+<!-- GITHUB DATA PANEL -->
+<section style="margin: 30px auto 0;">
+  <div id="wordsPanel" class="words-container">
+    <h3 style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">📂 Data Stream / Kelime Listesi</h3>
+    <div id="wordsList" class="words-grid"></div>
+  </div>
+</section>
 
 <!-- ENGLISH CONTENT -->
 <main id="content-en">
   <div class="hero">
     <h1>Hi, I'm Qeat</h1>
-    <p>2D Web Developer & Backend Systems Architect. Building high-performance solutions and customized digital environments.</p>
+    <p>2D Web Developer & Backend Systems Architect. Building autonomous logic frameworks and interactive digital environments.</p>
   </div>
 
   <section>
@@ -268,20 +323,20 @@
     <div class="grid">
       <div class="card">
         <div class="card-content">
-          <b>🤖 System Development</b>
-          <p>I build advanced automation and system structures with Node.js. Specialized in data processing, modular workflows, and ecosystem logic.</p>
+          <b>🤖 System Architecture</b>
+          <p>I engineer advanced Discord frameworks and automation engines using Node.js. Focused heavily on microservices, server economics, and scalable data flows.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <b>🎆 Core Interests</b>
-          <p>Active in competitive mechanics (Roblox Evade, Level 120+). Deeply inspired by tactical analysis and visual pacing in anime like Blue Lock.</p>
+          <b>🎆 Advanced Scripting</b>
+          <p>Developed custom execution scripts and optimization hubs for the Roblox platform. Experienced in runtime code manipulation and mastering game engine limits.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <b>🧠 Technical Stack</b>
-          <p>Focusing tightly on pure JavaScript, procedural rendering, and responsive application layout structures built from the ground up.</p>
+          <b>🧠 Core Stack</b>
+          <p>Prioritizing pure JavaScript and clean backend engineering. I prefer building robust web experiences and structural layouts entirely from the ground up.</p>
         </div>
       </div>
     </div>
@@ -326,7 +381,7 @@
 <main id="content-tr" style="display:none">
   <div class="hero">
     <h1>Selam, Ben Qeat</h1>
-    <p>2D Web Geliştirici ve Backend Sistem Mimarı. Yüksek performanslı çözümler ve optimize edilmiş dijital yapılar inşa ediyorum.</p>
+    <p>2D Web Geliştirici ve Backend Sistem Mimarı. Bağımsız mantık çerçeveleri ve etkileşimli dijital ortamlar inşa ediyorum.</p>
   </div>
 
   <section>
@@ -334,20 +389,20 @@
     <div class="grid">
       <div class="card">
         <div class="card-content">
-          <b>🤖 Sistem Geliştirme</b>
-          <p>Node.js altyapısıyla gelişmiş otomasyonlar ve sistem mimarileri tasarlıyorum. Veri işleme ve modüler döngüler üzerine yoğunlaşıyorum.</p>
+          <b>🤖 Sistem Mimarisi</b>
+          <p>Node.js kullanarak gelişmiş Discord altyapıları ve otomasyon motorları tasarlıyorum. Veri akışları, sunucu ekonomileri ve modüler yapılar üzerine yoğunlaşıyorum.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <b>🎆 İlgi Alanları</b>
-          <p>Rekabetçi oyun mekaniklerinde (Roblox Evade, Seviye 120+) aktifim. Blue Lock gibi yapımlardaki taktiksel analizlerden ilham alıyorum.</p>
+          <b>🎆 Gelişmiş Scripting</b>
+          <p>Roblox platformu için özel script hub'ları ve optimizasyon yazılımları geliştirdim. Çalışma zamanı (runtime) kod manipülasyonu ve oyun motoru sınırlarını çözme üzerine deneyimliyim.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <b>🧠 Geliştirme Katmanı</b>
-          <p>Etkileşimli web deneyimleri ve saf mantık içeren araçlar üretmek için tamamen JavaScript ve performans odaklı yapılara odaklanıyorum.</p>
+          <b>🧠 Çekirdek Katman</b>
+          <p>Tamamen saf JavaScript ve temiz arka plan (backend) mühendisliğine odaklanıyorum. Hazır kalıplar yerine, yapıları ve web deneyimlerini sıfırdan kodlamayı tercih ederim.</p>
         </div>
       </div>
     </div>
@@ -389,7 +444,7 @@
 </main>
 
 <script>
-  // İMLEÇ SCRIPTI (Performans için optimize edildi, lag kaldırıldı)
+  // İMLEÇ SCRIPTI
   const cursor = document.getElementById('custom-cursor');
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
@@ -398,12 +453,49 @@
   document.addEventListener('mousedown', () => cursor.classList.add('cursor-click'));
   document.addEventListener('mouseup', () => cursor.classList.remove('cursor-click'));
 
+  // --- GITHUB FETCH ENGINE ---
+  const cardsBtn = document.getElementById('cardsBtn');
+  const wordsPanel = document.getElementById('wordsPanel');
+  const wordsList = document.getElementById('wordsList');
+
+  // Senin Github Canlı JSON Adresin:
+  const jsonUrl = 'https://raw.githubusercontent.com/qeats-tec/qeat/refs/heads/main/kelime.json';
+
+  cardsBtn.addEventListener('click', async () => {
+    if (wordsPanel.classList.contains('active')) {
+      wordsPanel.classList.remove('active');
+      return;
+    }
+
+    try {
+      wordsList.innerHTML = '<span style="color: var(--muted); font-size:0.9rem;">Fetching raw data node...</span>';
+      wordsPanel.classList.add('active');
+
+      const response = await fetch(jsonUrl);
+      if (!response.ok) throw new Error('Fetch failed');
+      
+      const kelimeler = await response.json();
+      
+      wordsList.innerHTML = '';
+      kelimeler.forEach(kelime => {
+        const badge = document.createElement('div');
+        badge.className = 'word-badge';
+        badge.textContent = kelime;
+        wordsList.appendChild(badge);
+      });
+
+    } catch (error) {
+      console.error(error);
+      wordsList.innerHTML = '<span style="color: #ff4a4a; font-size:0.9rem;">Data sync blocked. Check console logs or JSON schema.</span>';
+    }
+  });
+
   // MÜZİK SCRIPTI
   const audio = document.getElementById('bgAudio');
   const mBtn = document.getElementById('musicBtn');
   mBtn.addEventListener('click', () => {
     if (audio.paused) {
-      audio.play().catch(err => console.log("Müzik çalma engellendi, etkileşim gerekiyor."));
+      audio.play().catch(e => console.log("Interaction required"));
       mBtn.textContent = "PAUSE";
     } else {
       audio.pause();
