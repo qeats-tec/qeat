@@ -7,13 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f19;             
-      --card-bg: rgba(18, 26, 47, 0.6); 
-      --accent: #a68a64;        
-      --accent-glow: rgba(166, 138, 100, 0.25);
-      --secondary: #4f6b9e;     
-      --text: #f3f4f6;          
-      --muted: #9ca3af;         
+      --bg: #0a0c10;             
+      --card-bg: rgba(255, 255, 255, 0.03); 
+      --accent: #ffcc00;        
+      --accent-glow: rgba(255, 204, 0, 0.15);
+      --secondary: #e4e4e7;     
+      --text: #ffffff;          
+      --muted: #a1a1aa;         
       --border: rgba(255, 255, 255, 0.08); 
     }
 
@@ -49,8 +49,8 @@
       color: var(--text);
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 0% 0%, #162044 0%, transparent 45%),
-        radial-gradient(circle at 100% 100%, #0d2e24 0%, transparent 45%);
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(255, 204, 0, 0.02) 0%, transparent 50%);
       background-attachment: fixed;
       line-height: 1.5;
     }
@@ -61,7 +61,7 @@
       bottom: 20px;
       right: 20px;
       z-index: 999;
-      background: var(--card-bg);
+      background: rgba(10, 12, 16, 0.8);
       border: 1px solid var(--border);
       padding: 10px 18px;
       border-radius: 50px;
@@ -78,7 +78,7 @@
       border-radius: 20px;
       font-weight: 800;
       font-size: 11px;
-      color: var(--bg);
+      color: #000000;
     }
 
     /* --- NAVIGASYON --- */
@@ -88,7 +88,7 @@
       z-index: 100;
       backdrop-filter: blur(15px);
       border-bottom: 1px solid var(--border);
-      background: rgba(11, 15, 25, 0.7);
+      background: rgba(10, 12, 16, 0.7);
     }
 
     .nav {
@@ -105,7 +105,7 @@
       font-size: 1.6rem;
       text-transform: uppercase;
       letter-spacing: 3px;
-      color: var(--accent);
+      color: var(--text);
     }
 
     .nav-controls {
@@ -115,7 +115,7 @@
     }
 
     .action-btn {
-      background: rgba(166, 138, 100, 0.1);
+      background: rgba(255, 204, 0, 0.05);
       border: 1px solid var(--accent);
       color: var(--accent);
       padding: 8px 18px;
@@ -127,7 +127,7 @@
     }
     .action-btn:hover {
       background: var(--accent);
-      color: var(--bg);
+      color: #000000;
       box-shadow: 0 0 15px var(--accent-glow);
     }
 
@@ -144,18 +144,18 @@
     #langMenu {
       position: absolute;
       right: 0; top: 45px;
-      background: #121a33;
+      background: #111318;
       border: 1px solid var(--border);
       list-style: none;
       padding: 6px;
       border-radius: 12px;
       display: none;
       min-width: 130px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
     #langMenu.show { display: block; animation: slideUp 0.2s ease forwards; }
     #langMenu li { padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--muted); }
-    #langMenu li:hover { background: rgba(255,255,255,0.08); color: var(--accent); }
+    #langMenu li:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
 
     /* --- HERO & SECTIONS --- */
     .hero {
@@ -168,7 +168,7 @@
       font-size: clamp(2.8rem, 7vw, 4.5rem);
       font-weight: 800;
       margin-bottom: 15px;
-      background: linear-gradient(135deg, #ffffff 30%, var(--secondary) 100%);
+      background: linear-gradient(135deg, #ffffff 40%, var(--muted) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -176,12 +176,14 @@
 
     section { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
     h2 {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       margin-bottom: 35px;
       display: flex;
       align-items: center;
       gap: 15px;
       font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     h2::after { content: ""; height: 1px; flex: 1; background: var(--border); }
 
@@ -205,7 +207,7 @@
     .card:hover {
       border-color: var(--accent);
       transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px var(--accent-glow);
     }
     .card-content { flex-grow: 1; }
     .card b { color: var(--accent); display: block; margin-bottom: 12px; font-size: 1.25rem; font-weight: 600; }
@@ -221,7 +223,7 @@
     .btn-link {
       display: inline-block;
       padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.02);
       color: var(--text);
       text-decoration: none;
       border-radius: 10px;
@@ -229,11 +231,11 @@
       font-weight: 600;
       border: 1px solid var(--border);
     }
-    .btn-link:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .btn-link:hover { background: var(--text); color: #000000; border-color: var(--text); }
 
     /* --- DINAMIK KELIME LISTESI ALANI --- */
     .words-container {
-      background: rgba(18, 26, 47, 0.4);
+      background: rgba(255, 255, 255, 0.01);
       border: 1px dashed var(--border);
       border-radius: 20px;
       padding: 25px;
@@ -249,7 +251,7 @@
       margin-top: 15px;
     }
     .word-badge {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       padding: 8px 16px;
       border-radius: 50px;
@@ -259,8 +261,8 @@
     }
     .word-badge:hover {
       border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(166, 138, 100, 0.05);
+      color: #000000;
+      background: var(--accent);
     }
 
     @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -289,7 +291,6 @@
   <div class="nav">
     <div class="logo">QEAT</div>
     <div class="nav-controls">
-      <!-- CARDS BUTONU -->
       <button id="cardsBtn" class="action-btn">Card's</button>
       
       <div class="lang-wrapper">
@@ -396,13 +397,13 @@
       <div class="card">
         <div class="card-content">
           <b>🎆 Gelişmiş Scripting</b>
-          <p>Roblox platformu için özel script hub'ları ve optimizasyon yazılımları geliştirdim. Runtime kod manipülasyonu ve oyun motoru falan filan işte.</p>
+          <p>Roblox platformu için özel script hub'ları ve optimizasyon yazılımları geliştirdim. Runtime kod manipülasyonu ve oyun motoru sınırlarını zorlama.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
           <b>🧠 Çekirdek Katman</b>
-          <p>Tamamen saf JavaScript ve Backend mühendisliğine odaklanıyorum.Babalar JS kullanır.</p>
+          <p>Tamamen saf JavaScript ve Backend mühendisliğine odaklanıyorum. Babalar JS kullanır.</p>
         </div>
       </div>
     </div>
@@ -432,7 +433,7 @@
       <div class="card">
         <div class="card-content">
           <b>Arşiv Deposu 🗑️</b>
-          <p>Yazılım serüvenimin ilk dönemlerinden kalan eski mantık denemeleri ve deneysel kod blokları. Bunlar Harbiden çok boş!</p>
+          <p>Yazılım serüvenimin ilk dönemlerinden kalan eski mantık denemeleri ve deneysel kod blokları.</p>
         </div>
         <div class="links-group">
           <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
@@ -458,7 +459,6 @@
   const wordsPanel = document.getElementById('wordsPanel');
   const wordsList = document.getElementById('wordsList');
 
-  // Senin Github Canlı JSON Adresin:
   const jsonUrl = 'https://raw.githubusercontent.com/qeats-tec/qeat/refs/heads/main/kelime.json';
 
   cardsBtn.addEventListener('click', async () => {
