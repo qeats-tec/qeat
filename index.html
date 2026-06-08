@@ -6,22 +6,27 @@
   <title>Qeat | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-:root {
-      --bg: #f5f2ed;            /* Çok açık, sıcak krem (Arka plan) */
-      --card-bg: #ffffff;       /* Kartlar için tam beyaz (Kontrast sağlar) */
-      --accent: #a68a64;        /* Vurgular ve butonlar için yumuşak kahve */
-      --accent-glow: rgba(166, 138, 100, 0.2); /* Hafif, boğmayan bir gölge */
-      --secondary: #5c5c5c;     /* İkincil renk (Yazı vurguları için koyu gri) */
-      --text: #2d2d2d;          /* Ana metin için koyu, net antrasit */
-      --muted: #757575;         /* İkincil metinler için orta gri */
-      --border: rgba(0, 0, 0, 0.15); /* Çerçeveler için belirgin ama yumuşak gri */
+    :root {
+      --bg: #0b0f19;             /* Derin siberpunk gece arka planı */
+      --card-bg: rgba(18, 26, 47, 0.6); /* Transparan koyu cam kartlar */
+      --accent: #a68a64;        /* Altın/Yumuşak kahve vurgu rengi */
+      --accent-glow: rgba(166, 138, 100, 0.25);
+      --secondary: #4f6b9e;     /* İkincil yumuşak mavi/gri tonu */
+      --text: #f3f4f6;          /* Net okunabilir açık gri ana metin */
+      --muted: #9ca3af;         /* İkincil açıklamalar için orta gri */
+      --border: rgba(255, 255, 255, 0.08); /* Modern, ince border */
     }
 
-    /* --- ÖZEL İMLEÇ AYARLARI --- */
     * { 
       box-sizing: border-box; 
-      transition: all 0.3s ease; 
-      cursor: none !important; 
+      margin: 0;
+      padding: 0;
+      cursor: none !important; /* Özel imleç aktifken varsayılanı gizle */
+    }
+
+    /* Transition her şeye uygulanırsa imleci de yavaşlatır, o yüzden seçici ayırdık */
+    body, header, .card, .btn-link, #langBtn, #langMenu li {
+      transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     #custom-cursor {
@@ -34,14 +39,26 @@
       pointer-events: none;
       z-index: 10000;
       transform: translate(-10%, -10%); 
-      transition: transform 0.05s linear;
+      will-change: left, top; /* Performans optimizasyonu */
     }
 
     .cursor-click {
       transform: scale(0.8) rotate(-10deg) !important;
     }
 
-    /* --- MÜZİK ÇALAR STİLİ --- */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 0% 0%, #162044 0%, transparent 45%),
+        radial-gradient(circle at 100% 100%, #0d2e24 0%, transparent 45%);
+      background-attachment: fixed;
+      line-height: 1.5;
+    }
+
+    /* --- MÜZİK ÇALAR --- */
     .music-player {
       position: fixed;
       bottom: 20px;
@@ -49,155 +66,167 @@
       z-index: 999;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 10px 15px;
+      padding: 10px 18px;
       border-radius: 50px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      backdrop-filter: blur(10px);
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
 
     #musicBtn {
       background: var(--accent);
       border: none;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
       font-weight: 800;
       font-size: 11px;
       color: var(--bg);
     }
-
-    body {
-      margin: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 0% 0%, #162044 0%, transparent 35%),
-        radial-gradient(circle at 100% 100%, #0d2e24 0%, transparent 35%);
-      background-attachment: fixed;
+    #musicBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--accent-glow);
     }
 
+    /* --- NAVIGASYON --- */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(15px);
       border-bottom: 1px solid var(--border);
-      background: rgba(6, 9, 19, 0.7);
+      background: rgba(11, 15, 25, 0.7);
     }
 
     .nav {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 1.2rem 2rem;
     }
 
     .logo {
       font-weight: 800;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       color: var(--accent);
-      text-shadow: 0 0 10px var(--accent-glow);
+      text-shadow: 0 0 15px var(--accent-glow);
     }
 
     .lang-wrapper { position: relative; }
     #langBtn {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
-      color: white;
+      color: var(--text);
       padding: 8px 16px;
       border-radius: 12px;
       font-weight: 600;
+      font-size: 0.9rem;
     }
-    #langBtn:hover { background: var(--accent); color: var(--bg); }
+    #langBtn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
     #langMenu {
       position: absolute;
-      right: 0; top: 50px;
+      right: 0; 
+      top: 45px;
       background: #121a33;
       border: 1px solid var(--border);
       list-style: none;
-      padding: 5px;
+      padding: 6px;
       border-radius: 12px;
       display: none;
-      min-width: 120px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      min-width: 130px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
-    #langMenu.show { display: block; animation: slideUp 0.2s ease; }
-    #langMenu li { padding: 10px; border-radius: 8px; }
-    #langMenu li:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
+    #langMenu.show { display: block; animation: slideUp 0.2s ease forwards; }
+    #langMenu li { padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--muted); }
+    #langMenu li:hover { background: rgba(255,255,255,0.08); color: var(--accent); }
 
+    /* --- HERO & SECTIONS --- */
     .hero {
       text-align: center;
-      padding: 100px 20px 60px;
+      padding: 120px 20px 60px;
       max-width: 800px;
       margin: auto;
     }
     .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 4rem);
-      margin: 0;
-      background: linear-gradient(to right, #fff, var(--secondary));
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 800;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff 30%, var(--secondary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero p { color: var(--muted); font-size: 1.1rem; margin-top: 20px; }
+    .hero p { color: var(--muted); font-size: 1.2rem; max-width: 600px; margin: auto; }
 
-    section { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+    section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
     h2 {
-      font-size: 1.5rem;
-      margin-bottom: 30px;
+      font-size: 1.6rem;
+      margin-bottom: 35px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
     h2::after { content: ""; height: 1px; flex: 1; background: var(--border); }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
     }
 
+    /* --- KARTLAR --- */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 25px;
+      padding: 30px;
       backdrop-filter: blur(10px);
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .card:hover {
       border-color: var(--accent);
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px var(--accent-glow);
     }
-    .card b { color: var(--accent); display: block; margin-bottom: 10px; font-size: 1.2rem; }
-    .card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+    .card-content { flex-grow: 1; }
+    .card b { color: var(--accent); display: block; margin-bottom: 12px; font-size: 1.25rem; font-weight: 600; }
+    .card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
+
+    .links-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
     .btn-link {
       display: inline-block;
-      margin-top: 15px;
       padding: 8px 16px;
-      background: rgba(122, 162, 255, 0.1);
-      color: var(--secondary);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 0.85rem;
       font-weight: 600;
+      border: 1px solid var(--border);
     }
-    .btn-link:hover { background: var(--secondary); color: white; }
+    .btn-link:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 600px) {
-      .hero { padding: 60px 20px; }
+      .hero { padding: 80px 20px 40px; }
       .grid { grid-template-columns: 1fr; }
+      .nav { padding: 1rem; }
     }
   </style>
 </head>
@@ -207,7 +236,7 @@
 <div id="custom-cursor"></div>
 
 <div class="music-player">
-  <span style="font-size: 11px; font-weight: bold;">QEAT RADIO</span>
+  <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">QEAT RADIO</span>
   <button id="musicBtn">PLAY</button>
   <audio id="bgAudio" loop>
     <source src="sarki.mp3" type="audio/mpeg">
@@ -227,70 +256,100 @@
   </div>
 </header>
 
+<!-- ENGLISH CONTENT -->
 <main id="content-en">
   <div class="hero">
     <h1>Hi, I'm Qeat</h1>
-    <p>2D Web Developer & Discord Systems Architect. Building digital solutions and custom communities.</p>
+    <p>2D Web Developer & Backend Systems Architect. Building high-performance solutions and customized digital environments.</p>
   </div>
-
- <section>
-  <h2>Main Statistics</h2>
-  <div class="grid">
-    <div class="card">
-      <b>🤖 Bot Developer</b>
-      <p>I code advanced Discord bots with Node.js. I'm very proficient in economy and moderation systems.</p>
-    </div>
-
-    <div class="card">
-      <b>🎆 My Hobbies</b>
-      <p>I'm a professional Evade player (on Roblox). I watch anime (Blue Lock Bachira is awesome)</p>
-    </div>
-
-    <div class="card">
-      <b>🧠 Scripting</b>
-      <p>I focus on JavaScript to create interactive web experiences and efficient tools.</p>
-    </div>
-  </div>
-</section>
 
   <section>
-<h2>Projects & Services</h2>
-  <div class="grid">
-  <div class="card">
-    <b>Discord World</b>
-      <p>I develop custom bots like Cenqaver and provide full support for server infrastructures 👍.</p>
-      <a href="https://discord.com/users/1386428726744711308" class="btn-link">Check out my profile</a>
-      <span style="color:var(--accent); display: block; margin-top: 10px; font-weight: bold;">Discord: gang.qeat</span>
-  </div>
-<div class="card">
-<b>Development</b>
-<p>My main projects and current code that I'm working on.</p>
-<a href="https://qeats-tec.github.io/Qsu/" class="btn-link">Qsu! 🔥</a>
-<a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">System Login</a>
-</div>
-<div class="card">
-<b>Archive🗑️</b>
-<p>My old works and remnants from my first coding experiences.</p>
-<a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
-<a href="https://qeats-tec.github.io/Test/" class="btn-link">Trust Game</a>
+    <h2>Main Statistics</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-content">
+          <b>🤖 System Development</b>
+          <p>I build advanced automation and system structures with Node.js. Specialized in data processing, modular workflows, and ecosystem logic.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <b>🎆 Core Interests</b>
+          <p>Active in competitive mechanics (Roblox Evade, Level 120+). Deeply inspired by tactical analysis and visual pacing in anime like Blue Lock.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <b>🧠 Technical Stack</b>
+          <p>Focusing tightly on pure JavaScript, procedural rendering, and responsive application layout structures built from the ground up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section>
+    <h2>Projects & Services</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-content">
+          <b>Discord Infrastructure</b>
+          <p>Developing heavy-duty modular frameworks and managing backend communications for core operations.</p>
+          <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: gang.qeat</span>
+        </div>
+        <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Connect Profile</a>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <b>Active Repositories</b>
+          <p>Current architecture and production engines under continuous integration.</p>
+        </div>
+        <div class="links-group">
+          <a href="https://qeats-tec.github.io/Qsu/" class="btn-link">Qsu! 🔥</a>
+          <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">System Execution</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <b>Archive Vault 🗑️</b>
+          <p>Legacy nodes, logical iterations, and early experimental builds from my initial development pipeline.</p>
+        </div>
+        <div class="links-group">
+          <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
+          <a href="https://qeats-tec.github.io/Test/" class="btn-link">Trust Matrix</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
+<!-- TÜRKÇE İÇERİK -->
 <main id="content-tr" style="display:none">
   <div class="hero">
     <h1>Selam, Ben Qeat</h1>
-    <p>2D Web Geliştirici ve Discord Sistemleri ile uğraşıyorum. Botlar ve özel sunuculara alt yapı inşa ediyorum.</p>
+    <p>2D Web Geliştirici ve Backend Sistem Mimarı. Yüksek performanslı çözümler ve optimize edilmiş dijital yapılar inşa ediyorum.</p>
   </div>
 
   <section>
     <h2>Ana İstatistikler</h2>
     <div class="grid">
-      <div class="card"><b>🤖 Bot Geliştirici</b><p>Node.js ile gelişmiş Discord botları kodluyorum. Ekonomi ve moderasyon sistemlerinde çok pro'yum.</p></div>
-      <div class="card"><b>🎆Hobilerim</b><p>Profesyonel Evade oyuncusuyum (Roblox'ta). Anime izlerim (Blue lock Bachira çok dehşet bi şey)</p></div>
-      <div class="card"><b>🧠 Scripting</b><p>Etkileşimli web deneyimleri ve verimli araçlar oluşturmak için JavaScript üzerine yoğunlaşıyorum.</p></div>
+      <div class="card">
+        <div class="card-content">
+          <b>🤖 Sistem Geliştirme</b>
+          <p>Node.js altyapısıyla gelişmiş otomasyonlar ve sistem mimarileri tasarlıyorum. Veri işleme ve modüler döngüler üzerine yoğunlaşıyorum.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <b>🎆 İlgi Alanları</b>
+          <p>Rekabetçi oyun mekaniklerinde (Roblox Evade, Seviye 120+) aktifim. Blue Lock gibi yapımlardaki taktiksel analizlerden ilham alıyorum.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <b>🧠 Geliştirme Katmanı</b>
+          <p>Etkileşimli web deneyimleri ve saf mantık içeren araçlar üretmek için tamamen JavaScript ve performans odaklı yapılara odaklanıyorum.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -298,29 +357,39 @@
     <h2>Projeler & Hizmetler</h2>
     <div class="grid">
       <div class="card">
-        <b>Discord Dünyası</b>
-        <p>Cenqaver gibi özel botlar geliştiriyom ve sunucu altyapıları için tam destek sağlıyomt👍.</p>
-        <a href="https://discord.com/users/1386428726744711308" class="btn-link">Profilime Göz At (Dc)</a>
-        <span style="color:var(--accent); display: block; margin-top: 10px; font-weight: bold;">Discord: gang.qeat</span>
+        <div class="card-content">
+          <b>Discord Altyapıları</b>
+          <p>Cenqaver gibi modüler yapılar geliştiriyor ve topluluk altyapıları için uçtan uca arka plan desteği sunuyorum.</p>
+          <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: gang.qeat</span>
+        </div>
+        <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Profille Bağlantı Kur</a>
       </div>
       <div class="card">
-        <b>Geliştirme</b>
-        <p>Üzerinde çalıştığım ana projelerim ve güncel kodlarım.</p>
-        <a href="https://qeats-tec.github.io/Qsu/" class="btn-link">Qsu! 🔥</a>
-        <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">Sistem Girişi</a>
+        <div class="card-content">
+          <b>Aktif Geliştirmeler</b>
+          <p>Üzerinde çalışmaya devam ettiğim, güncel mantık ve motor süreçlerini barındıran projelerim.</p>
+        </div>
+        <div class="links-group">
+          <a href="https://qeats-tec.github.io/Qsu/" class="btn-link">Qsu! 🔥</a>
+          <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">Sistem Girişi</a>
+        </div>
       </div>
       <div class="card">
-        <b>Arşiv🗑️</b>
-        <p>Eski çalışmalarım ve ilk kodlama deneyimlerimden kalanlar.</p>
-        <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
-        <a href="https://qeats-tec.github.io/Test/" class="btn-link">Güven Oyunu</a>
+        <div class="card-content">
+          <b>Arşiv Deposu 🗑️</b>
+          <p>Yazılım serüvenimin ilk dönemlerinden kalan eski mantık denemeleri ve deneysel kod blokları.</p>
+        </div>
+        <div class="links-group">
+          <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
+          <a href="https://qeats-tec.github.io/Test/" class="btn-link">Güven Matrisi</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <script>
-  // İMLEÇ SCRIPTI
+  // İMLEÇ SCRIPTI (Performans için optimize edildi, lag kaldırıldı)
   const cursor = document.getElementById('custom-cursor');
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
@@ -334,7 +403,7 @@
   const mBtn = document.getElementById('musicBtn');
   mBtn.addEventListener('click', () => {
     if (audio.paused) {
-      audio.play();
+      audio.play().catch(err => console.log("Müzik çalma engellendi, etkileşim gerekiyor."));
       mBtn.textContent = "PAUSE";
     } else {
       audio.pause();
