@@ -8,7 +8,7 @@
   <style>
     :root {
       --bg: #0a0c10;             
-      --card-bg: rgba(255, 255, 255, 0.03); 
+      --card-bg: rgba(10, 12, 16, 0.6); /* Arka plan görseli net görünsün diye kartların opaklığı hafif azaltıldı */
       --accent: #ffcc00;        
       --accent-glow: rgba(255, 204, 0, 0.15);
       --secondary: #e4e4e7;     
@@ -45,13 +45,19 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text);
       overflow-x: hidden;
+      
+      /* Arka plan görseli tanımlaması ve karanlık katman ayarı */
       background-image: 
-        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(255, 204, 0, 0.02) 0%, transparent 50%);
-      background-attachment: fixed;
+        linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.85)), /* Yazılar okunsun diye %85 karartma katmanı */
+        url('profil.png'); /* İstenen arka plan görseli */
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed; /* Sayfa kaysa bile arka plan sabit kalır */
+      
       line-height: 1.5;
     }
 
@@ -292,7 +298,7 @@
     <div class="logo">QEAT</div>
     <div class="nav-controls">
       <button id="cardsBtn" class="action-btn">Card's</button>
-      
+       
       <div class="lang-wrapper">
         <button id="langBtn">Language: EN</button>
         <ul id="langMenu">
@@ -304,7 +310,6 @@
   </div>
 </header>
 
-<!-- GITHUB DATA PANEL -->
 <section style="margin: 30px auto 0;">
   <div id="wordsPanel" class="words-container">
     <h3 style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">Card //</h3>
@@ -312,7 +317,6 @@
   </div>
 </section>
 
-<!-- ENGLISH CONTENT -->
 <main id="content-en">
   <div class="hero">
     <h1>Hi, I'm Qeat</h1>
@@ -378,7 +382,6 @@
   </section>
 </main>
 
-<!-- TÜRKÇE İÇERİK -->
 <main id="content-tr" style="display:none">
   <div class="hero">
     <h1>Selam, Ben Qeat</h1>
@@ -473,9 +476,9 @@
 
       const response = await fetch(jsonUrl);
       if (!response.ok) throw new Error('Fetch failed');
-      
+       
       const kelimeler = await response.json();
-      
+       
       wordsList.innerHTML = '';
       kelimeler.forEach(kelime => {
         const badge = document.createElement('div');
