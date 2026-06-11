@@ -8,7 +8,7 @@
   <style>
     :root {
       --bg: #0a0c10;             
-      --card-bg: rgba(10, 12, 16, 0.6); /* Arka plan görseli net görünsün diye kartların opaklığı hafif azaltıldı */
+      --card-bg: rgba(10, 12, 16, 0.6); 
       --accent: #ffcc00;        
       --accent-glow: rgba(255, 204, 0, 0.15);
       --secondary: #e4e4e7;     
@@ -49,14 +49,13 @@
       color: var(--text);
       overflow-x: hidden;
       
-      /* Arka plan görseli tanımlaması ve karanlık katman ayarı */
       background-image: 
-        linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.85)), /* Yazılar okunsun diye %85 karartma katmanı */
-        url('profil.png'); /* İstenen arka plan görseli */
+        linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.85)), 
+        url('profil.png'); 
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      background-attachment: fixed; /* Sayfa kaysa bile arka plan sabit kalır */
+      background-attachment: fixed; 
       
       line-height: 1.5;
     }
@@ -288,7 +287,7 @@
 <div class="music-player">
   <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">QEAT RADIO</span>
   <button id="musicBtn">PLAY</button>
-  <audio id="bgAudio" loop>
+  <audio id="bgAudio" loop preload="auto">
     <source src="sarki.mp3" type="audio/mpeg">
   </audio>
 </div>
@@ -493,13 +492,35 @@
     }
   });
 
-  // MÜZİK SCRIPTI
+  // --- GÜVENLİ MÜZİK SCRIPTI ---
   const audio = document.getElementById('bgAudio');
   const mBtn = document.getElementById('musicBtn');
-  mBtn.addEventListener('click', () => {
+
+  // Tarayıcı kilidini açmak için ilk kullanıcı etkileşimini dinleyen fonksiyon
+  function unlockAudio() {
+    audio.play().then(() => {
+      // Başarılı oynatılırsa hemen durdur (böylece ses yüklenmiş ve kilit açılmış olur)
+      audio.pause();
+      audio.currentTime = 0;
+    }).catch(e => console.log("Audio unlock tetiklenemedi:", e));
+    
+    // Kilidi bir kez açtıktan sonra event listener'ı kaldırıyoruz
+    document.removeEventListener('click', unlockAudio);
+  }
+  document.addEventListener('click', unlockAudio);
+
+  // Buton kontrol mekanizması
+  mBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Üstteki unlock tetikleyicisiyle çakışmasın
     if (audio.paused) {
-      audio.play().catch(e => console.log("Interaction required"));
-      mBtn.textContent = "PAUSE";
+      audio.play()
+        .then(() => {
+          mBtn.textContent = "PAUSE";
+        })
+        .catch(error => {
+          console.error("Oynatma hatası:", error);
+          alert("Tarayıcı engeli! Sayfaya bir kez tıkladıktan sonra tekrar deneyin.");
+        });
     } else {
       audio.pause();
       mBtn.textContent = "PLAY";
