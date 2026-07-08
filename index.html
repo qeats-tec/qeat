@@ -60,6 +60,76 @@
       line-height: 1.5;
     }
 
+    /* --- TROLL INTRO SCREEN --- */
+    #troll-enter-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: #050608;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9998;
+    }
+
+    #click-prompt {
+      color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.4rem;
+      letter-spacing: 5px;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      animation: blinkText 1.5s infinite;
+    }
+
+    @keyframes blinkText {
+      50% { opacity: 0; }
+    }
+
+    #troll-text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .troll-line {
+      color: #ff3838; /* Şok edici kırmızı terminal rengi */
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Flash bang ve patlama animasyonu */
+    .screen-flash-bang {
+      animation: flashEffect 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes flashEffect {
+      0% { background-color: #050608; }
+      40% { background-color: #ffffff; } /* Tam parlama noktası */
+      100% { background-color: #0a0c10; opacity: 0; visibility: hidden; }
+    }
+
+    /* --- REAL PORTFOLIO WRAPPER --- */
+    #app-wrapper {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(10px);
+      transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+    }
+
+    #app-wrapper.loaded {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+
     /* --- MÜZİK ÇALAR --- */
     .music-player {
       position: fixed;
@@ -284,167 +354,175 @@
 
 <div id="custom-cursor"></div>
 
-<div class="music-player">
-  <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">QEAT RADIO</span>
-  <button id="musicBtn">PLAY</button>
-  <audio id="bgAudio" loop preload="auto">
-    <source src="sarki.mp3" type="audio/mpeg">
-  </audio>
+<div id="troll-enter-screen">
+  <div id="click-prompt" onclick="runTrollScript()">[ CLICK TO ENTER ]</div>
+  <div id="troll-text-container"></div>
 </div>
 
-<header>
-  <div class="nav">
-    <div class="logo">QEAT</div>
-    <div class="nav-controls">
-      <button id="cardsBtn" class="action-btn">Card's</button>
-       
-      <div class="lang-wrapper">
-        <button id="langBtn">Language: EN</button>
-        <ul id="langMenu">
-          <li data-lang="en">English</li>
-          <li data-lang="tr">Türkçe</li>
-        </ul>
+<div id="app-wrapper">
+
+  <div class="music-player">
+    <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">QEAT RADIO</span>
+    <button id="musicBtn">PLAY</button>
+    <audio id="bgAudio" loop preload="auto">
+      <source src="sarki.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <header>
+    <div class="nav">
+      <div class="logo">QEAT</div>
+      <div class="nav-controls">
+        <button id="cardsBtn" class="action-btn">Card's</button>
+         
+        <div class="lang-wrapper">
+          <button id="langBtn">Language: EN</button>
+          <ul id="langMenu">
+            <li data-lang="en">English</li>
+            <li data-lang="tr">Türkçe</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<section style="margin: 30px auto 0;">
-  <div id="wordsPanel" class="words-container">
-    <h3 style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">Card //</h3>
-    <div id="wordsList" class="words-grid"></div>
-  </div>
-</section>
-
-<main id="content-en">
-  <div class="hero">
-    <h1>Hi, I'm Qeat</h1>
-    <p>2D Web Developer & Backend Systems Architect. Building autonomous logic frameworks and interactive digital environments.</p>
-  </div>
-
-  <section>
-    <h2>Main Statistics</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-content">
-          <b>🤖 System Architecture</b>
-          <p>I engineer advanced Discord frameworks and automation engines using Node.js. Focused heavily on microservices, server economics, and scalable data flows.</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>🎆 Advanced Scripting</b>
-          <p>Developed custom execution scripts and optimization hubs for the Roblox platform. Experienced in runtime code manipulation and mastering game engine limits.</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>🧠 Core Stack</b>
-          <p>Prioritizing pure JavaScript and clean backend engineering. I prefer building robust web experiences and structural layouts entirely from the ground up.</p>
-        </div>
-      </div>
+  <section style="margin: 30px auto 0;">
+    <div id="wordsPanel" class="words-container">
+      <h3 style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">Card //</h3>
+      <div id="wordsList" class="words-grid"></div>
     </div>
   </section>
 
-  <section>
-    <h2>Projects & Services</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-content">
-          <b>Discord Infrastructure</b>
-          <p>Developing heavy-duty modular frameworks and managing backend communications for core operations.</p>
-          <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: qeat.bee</span>
-        </div>
-        <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Connect Profile</a>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>Active Repositories</b>
-          <p>Current architecture and production engines under continuous integration.</p>
-        </div>
-        <div class="links-group">
-          <a href="https://qeats-tec.github.io/Qsu-Web/" class="btn-link">Qsu! 🔥</a>
-          <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">System Execution</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>Archive Vault 🗑️</b>
-          <p>Legacy nodes, logical iterations, and early experimental builds from my initial development pipeline.</p>
-        </div>
-        <div class="links-group">
-          <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
-          <a href="https://qeats-tec.github.io/Test/" class="btn-link">Trust Matrix</a>
-        </div>
-      </div>
+  <main id="content-en">
+    <div class="hero">
+      <h1>Hi, I'm Qeat</h1>
+      <p>2D Web Developer & Backend Systems Architect. Building autonomous logic frameworks and interactive digital environments.</p>
     </div>
-  </section>
-</main>
 
-<main id="content-tr" style="display:none">
-  <div class="hero">
-    <h1>Selam, Ben Qeat</h1>
-    <p>2D Web Geliştirici ve Backend Sistem Mimarı. Bağımsız mantık çerçeveleri ve etkileşimli dijital ortamlar inşa ediyorum.</p>
-  </div>
+    <section>
+      <h2>Main Statistics</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <b>🤖 System Architecture</b>
+            <p>I engineer advanced Discord frameworks and automation engines using Node.js. Focused heavily on microservices, server economics, and scalable data flows.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <b>🎆 Advanced Scripting</b>
+            <p>Developed custom execution scripts and optimization hubs for the Roblox platform. Experienced in runtime code manipulation and mastering game engine limits.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <b>🧠 Core Stack</b>
+            <p>Prioritizing pure JavaScript and clean backend engineering. I prefer building robust web experiences and structural layouts entirely from the ground up.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <h2>Ana İstatistikler</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-content">
-          <b>🤖 Sistem Mimarisi</b>
-          <p>Node.js kullanarak gelişmiş Discord altyapıları ve otomasyon motorları tasarlıyorum. Veri akışları, sunucu ekonomileri ve modüler yapılar üzerine yoğunlaşıyorum.</p>
+    <section>
+      <h2>Projects & Services</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <b>Discord Infrastructure</b>
+            <p>Developing heavy-duty modular frameworks and managing backend communications for core operations.</p>
+            <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: qeat.bee</span>
+          </div>
+          <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Connect Profile</a>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <b>Active Repositories</b>
+            <p>Current architecture and production engines under continuous integration.</p>
+          </div>
+          <div class="links-group">
+            <a href="https://qeats-tec.github.io/Qsu-Web/" class="btn-link">Qsu! 🔥</a>
+            <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">System Execution</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <b>Archive Vault 🗑️</b>
+            <p>Legacy nodes, logical iterations, and early experimental builds from my initial development pipeline.</p>
+          </div>
+          <div class="links-group">
+            <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
+            <a href="https://qeats-tec.github.io/Test/" class="btn-link">Trust Matrix</a>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-content">
-          <b>🎆 Gelişmiş Scripting</b>
-          <p>Roblox platformu için özel script hub'ları ve optimizasyon yazılımları geliştirdim. Runtime kod manipülasyonu ve oyun motoru sınırlarını zorlama.</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>🧠 Çekirdek Katman</b>
-          <p>Tamamen saf JavaScript ve Backend mühendisliğine odaklanıyorum. Babalar JS kullanır.</p>
-        </div>
-      </div>
+    </section>
+  </main>
+
+  <main id="content-tr" style="display:none">
+    <div class="hero">
+      <h1>Selam, Ben Qeat</h1>
+      <p>2D Web Geliştirici ve Backend Sistem Mimarı. Bağımsız mantık çerçeveleri ve etkileşimli dijital ortamlar inşa ediyorum.</p>
     </div>
-  </section>
 
-  <section>
-    <h2>Projeler & Hizmetler</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-content">
-          <b>Discord Altyapıları</b>
-          <p>Cenqaver gibi modüler yapılar geliştiriyor ve topluluk altyapıları için uçtan uca arka plan desteği sunuyorum.</p>
-          <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: qeat.bee</span>
+    <section>
+      <h2>Ana İstatistikler</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <b>🤖 Sistem Mimarisi</b>
+            <p>Node.js kullanarak gelişmiş Discord altyapıları ve otomasyon motorları tasarlıyorum. Veri akışları, sunucu ekonomileri ve modüler yapılar üzerine yoğunlaşıyorum.</p>
+          </div>
         </div>
-        <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Profille Bağlantı Kur</a>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>Aktif Geliştirmeler</b>
-          <p>Üzerinde çalışmaya devam ettiğim, güncel mantık ve motor süreçlerini barındıran projelerim.</p>
+        <div class="card">
+          <div class="card-content">
+            <b>🎆 Gelişmiş Scripting</b>
+            <p>Roblox platformu için özel script hub'ları ve optimizasyon yazılımları geliştirdim. Runtime kod manipülasyonu ve oyun motoru sınırlarını zorlama.</p>
+          </div>
         </div>
-        <div class="links-group">
-          <a href="https://qeats-tec.github.io/Qsu-Web/" class="btn-link">Qsu! 🔥</a>
-          <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">system.exe</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <b>Arşiv Deposu 🗑️</b>
-          <p>Yazılım serüvenimin ilk dönemlerinden kalan eski mantık denemeleri ve deneysel kod blokları.</p>
-        </div>
-        <div class="links-group">
-          <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
-          <a href="https://qeats-tec.github.io/Test/" class="btn-link">Güven Matrisi</a>
+        <div class="card">
+          <div class="card-content">
+            <b>🧠 Çekirdek Katman</b>
+            <p>Tamamen saf JavaScript ve Backend mühendisliğine odaklanıyorum. Babalar JS kullanır.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+
+    <section>
+      <h2>Projeler & Hizmetler</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <b>Discord Altyapıları</b>
+            <p>Cenqaver gibi modüler yapılar geliştiriyor ve topluluk altyapıları için uçtan uca arka plan desteği sunuyorum.</p>
+            <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: qeat.bee</span>
+          </div>
+          <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Profille Bağlantı Kur</a>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <b>Aktif Geliştirmeler</b>
+            <p>Üzerinde çalışmaya devam ettiğim, güncel mantık ve motor süreçlerini barındıran projelerim.</p>
+          </div>
+          <div class="links-group">
+            <a href="https://qeats-tec.github.io/Qsu-Web/" class="btn-link">Qsu! 🔥</a>
+            <a href="https://qeats-tec.github.io/system-qeat.exe/" class="btn-link">system.exe</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <b>Arşiv Deposu 🗑️</b>
+            <p>Yazılım serüvenimin ilk dönemlerinden kalan eski mantık denemeleri ve deneysel kod blokları.</p>
+          </div>
+          <div class="links-group">
+            <a href="https://qeats-tec.github.io/Wilson/" class="btn-link">Save Wilson!</a>
+            <a href="https://qeats-tec.github.io/Test/" class="btn-link">Güven Matrisi</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
 
 <script>
   // İMLEÇ SCRIPTI
@@ -455,6 +533,66 @@
   });
   document.addEventListener('mousedown', () => cursor.classList.add('cursor-click'));
   document.addEventListener('mouseup', () => cursor.classList.remove('cursor-click'));
+
+  // --- TROLL SCRIPT MECHANISM ---
+  const trollTexts = [
+    "Burayı guns.lol zannettin değil mi...",
+    "Yanıldın.",
+    "Burası QeatHUB!"
+  ];
+
+  function runTrollScript() {
+    // Butonu yok et
+    document.getElementById('click-prompt').style.display = 'none';
+    
+    const container = document.getElementById('troll-text-container');
+    let currentLine = 0;
+
+    function typeWriterEffect() {
+      if (currentLine < trollTexts.length) {
+        const lineDiv = document.createElement('div');
+        lineDiv.className = 'troll-line';
+        container.appendChild(lineDiv);
+
+        let charIndex = 0;
+        const fullText = trollTexts[currentLine];
+
+        function writeChar() {
+          if (charIndex < fullText.length) {
+            lineDiv.innerHTML += fullText.charAt(charIndex);
+            charIndex++;
+            setTimeout(writeChar, 45); // Harf hızı
+          } else {
+            currentLine++;
+            setTimeout(typeWriterEffect, 700); // Satır arası duraksama
+          }
+        }
+        writeChar();
+      } else {
+        // Her şey bitti, patlat sahneyi!
+        setTimeout(triggerExplosion, 400);
+      }
+    }
+    typeWriterEffect();
+  }
+
+  function triggerExplosion() {
+    const screen = document.getElementById('troll-enter-screen');
+    const wrapper = document.getElementById('app-wrapper');
+    const audio = document.getElementById('bgAudio');
+    const mBtn = document.getElementById('musicBtn');
+
+    // Parlama efektini tetikle
+    screen.classList.add('screen-flash-bang');
+
+    // Tam beyazlık anında portfolyoyu arkada yükle ve müziği patlat
+    setTimeout(() => {
+      wrapper.classList.add('loaded');
+      audio.play()
+        .then(() => { mBtn.textContent = "PAUSE"; })
+        .catch(err => console.log("Otomatik ses tarayıcı engeline takıldı:", err));
+    }, 300);
+  }
 
   // --- GITHUB FETCH ENGINE ---
   const cardsBtn = document.getElementById('cardsBtn');
@@ -475,9 +613,9 @@
 
       const response = await fetch(jsonUrl);
       if (!response.ok) throw new Error('Fetch failed');
-       
+        
       const kelimeler = await response.json();
-       
+        
       wordsList.innerHTML = '';
       kelimeler.forEach(kelime => {
         const badge = document.createElement('div');
@@ -496,27 +634,11 @@
   const audio = document.getElementById('bgAudio');
   const mBtn = document.getElementById('musicBtn');
 
-  // Tarayıcı kilidini açmak için ilk kullanıcı etkileşimini dinleyen fonksiyon
-  function unlockAudio() {
-    audio.play().then(() => {
-      // Başarılı oynatılırsa hemen durdur (böylece ses yüklenmiş ve kilit açılmış olur)
-      audio.pause();
-      audio.currentTime = 0;
-    }).catch(e => console.log("Audio unlock tetiklenemedi:", e));
-    
-    // Kilidi bir kez açtıktan sonra event listener'ı kaldırıyoruz
-    document.removeEventListener('click', unlockAudio);
-  }
-  document.addEventListener('click', unlockAudio);
-
-  // Buton kontrol mekanizması
   mBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Üstteki unlock tetikleyicisiyle çakışmasın
+    e.stopPropagation(); 
     if (audio.paused) {
       audio.play()
-        .then(() => {
-          mBtn.textContent = "PAUSE";
-        })
+        .then(() => { mBtn.textContent = "PAUSE"; })
         .catch(error => {
           console.error("Oynatma hatası:", error);
           alert("Tarayıcı engeli! Sayfaya bir kez tıkladıktan sonra tekrar deneyin.");
