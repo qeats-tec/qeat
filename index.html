@@ -4,74 +4,100 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qeat | Portfolio</title>
-  <!-- Orbitron Fontu Eklendi (Köşeli, Yüksek Teknoloji Stili) -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght=300;400;600;800&display=swap" rel="stylesheet">
   
+  <!-- Fonts: Orbitron & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root {
-      --bg: #0a0c10;              
-      --card-bg: rgba(10, 12, 16, 0.6); 
-      --accent: #ffcc00;        
-      --accent-glow: rgba(255, 204, 0, 0.25);
-      --secondary: #e4e4e7;     
-      --text: #ffffff;          
-      --muted: #a1a1aa;         
-      --border: rgba(255, 255, 255, 0.08); 
+      --bg: #0b0c0f;
+      --card-bg: rgba(20, 22, 28, 0.65);
+      --card-hover: rgba(28, 31, 40, 0.85);
+      --accent: #f5c211;
+      --accent-soft: rgba(245, 194, 17, 0.12);
+      --accent-hover: #e5b800;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(245, 194, 17, 0.3);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
     }
 
-    * { 
-      box-sizing: border-box; 
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      cursor: none !important; 
+      cursor: none !important;
     }
-
-    body, header, .card, .btn-link, #langBtn, .action-btn, #langMenu li {
-      transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    #custom-cursor {
-      position: fixed;
-      width: 48px; 
-      height: 48px;
-      background-image: url('pixilart-drawing (21).png'); 
-      background-size: contain;
-      background-repeat: no-repeat;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-10%, -10%); 
-      will-change: left, top;
-    }
-
-    .cursor-click { transform: scale(0.8) rotate(-10deg) !important; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       overflow-x: hidden;
-      
+      line-height: 1.6;
       background-image: 
-        linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.85)), 
-        url('profil.png'); 
+        radial-gradient(circle at 50% 0%, rgba(245, 194, 17, 0.05) 0%, transparent 50%),
+        linear-gradient(rgba(11, 12, 15, 0.92), rgba(11, 12, 15, 0.92)),
+        url('profil.png');
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      background-attachment: fixed; 
-      
-      line-height: 1.5;
+      background-attachment: fixed;
     }
 
-    /* --- YENİ LIQUID LOADING INTRO --- */
+    #custom-cursor {
+      position: fixed;
+      width: 42px;
+      height: 42px;
+      background-image: url('pixilart-drawing (21).png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      pointer-events: none;
+      z-index: 100000;
+      transform: translate(-20%, -20%);
+      will-change: left, top;
+      transition: transform 0.05s ease-out;
+    }
+
+    #cursor-fallback-ring {
+      position: fixed;
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s ease, height 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .cursor-hover #cursor-fallback-ring {
+      width: 44px;
+      height: 44px;
+      background-color: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .cursor-click {
+      transform: translate(-20%, -20%) scale(0.82) rotate(-8deg) !important;
+    }
+
     #troll-enter-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(5, 6, 8, 0.85);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      background: rgba(8, 9, 11, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -80,31 +106,25 @@
     }
 
     .liquid-loader-wrapper {
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: floatShake 3s ease-in-out infinite;
+      animation: gentleFloat 4s ease-in-out infinite;
     }
 
-    /* Hafif Sallanma / Süzülme Efekti */
-    @keyframes floatShake {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      25% { transform: translateY(-8px) rotate(-1deg); }
-      75% { transform: translateY(6px) rotate(1deg); }
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
-    /* SVG Maske ve Sıvı Katmanları */
     .qh-svg-container {
-      width: 260px;
-      height: 180px;
+      width: 250px;
+      height: 170px;
       position: relative;
-      filter: drop-shadow(0 0 25px var(--accent-glow));
     }
 
-    /* Sıvı Yükselme Animasyonu */
     .liquid-wave {
-      animation: waveMove 2s linear infinite;
+      animation: waveMove 2.2s linear infinite;
     }
 
     @keyframes waveMove {
@@ -116,41 +136,47 @@
       margin-top: 35px;
       color: var(--accent);
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.95rem;
-      letter-spacing: 4px;
+      font-size: 0.9rem;
+      letter-spacing: 3px;
       font-weight: 800;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s ease;
-      text-shadow: 0 0 10px var(--accent-glow);
+      background: rgba(245, 194, 17, 0.08);
+      border: 1px solid var(--border-accent);
+      padding: 10px 24px;
+      border-radius: 50px;
     }
 
     #click-prompt.ready {
       opacity: 1;
       pointer-events: auto;
-      animation: blinkText 1.2s infinite;
+      animation: softPulse 1.8s infinite;
     }
 
-    @keyframes blinkText {
-      50% { opacity: 0.3; }
+    @keyframes softPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.98); }
     }
 
     .screen-flash-bang {
-      animation: flashEffect 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: flashEffect 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes flashEffect {
-      0% { background-color: rgba(5, 6, 8, 0.85); }
-      40% { background-color: #ffffff; } 
-      100% { background-color: #0a0c10; opacity: 0; visibility: hidden; }
+      0% { background-color: rgba(8, 9, 11, 0.96); }
+      30% { background-color: #ffffff; } 
+      100% { background-color: #0b0c0f; opacity: 0; visibility: hidden; }
     }
 
-    /* --- REAL PORTFOLIO WRAPPER --- */
     #app-wrapper {
       opacity: 0;
-      transform: translateY(20px);
-      filter: blur(10px);
-      transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+      transform: translateY(15px);
+      filter: blur(8px);
+      transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     #app-wrapper.loaded {
@@ -159,164 +185,232 @@
       filter: blur(0px);
     }
 
-    /* --- SABIT MÜZİK ÇALAR --- */
-    .music-player {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      background: rgba(10, 12, 16, 0.85);
-      border: 1px solid var(--border);
-      padding: 10px 18px;
-      border-radius: 50px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    #musicBtn {
-      background: var(--accent);
-      border: none;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 800;
-      font-size: 11px;
-      color: #000000;
-    }
-
-    /* --- NAVIGASYON --- */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      background: rgba(10, 12, 16, 0.7);
+      background: rgba(11, 12, 15, 0.75);
     }
 
     .nav {
-      max-width: 1100px;
+      max-width: 1050px;
       margin: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 2rem;
+      padding: 1.1rem 1.8rem;
     }
 
     .logo {
       font-family: 'Orbitron', sans-serif;
       font-weight: 900;
-      font-size: 1.6rem;
-      letter-spacing: 3px;
-      color: var(--text);
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo span {
+      color: var(--accent);
     }
 
     .nav-controls {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
     }
 
     .action-btn {
-      background: rgba(255, 204, 0, 0.05);
-      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--border-accent);
       color: var(--accent);
       padding: 8px 18px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+
     .action-btn:hover {
       background: var(--accent);
       color: #000000;
-      box-shadow: 0 0 15px var(--accent-glow);
+      border-color: var(--accent);
+      transform: translateY(-1px);
     }
 
     #langBtn {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       color: var(--text);
       padding: 8px 16px;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.25s ease;
     }
-    #langBtn:hover { background: rgba(255,255,255,0.08); }
+
+    #langBtn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
 
     #langMenu {
       position: absolute;
-      right: 0; top: 45px;
-      background: #111318;
+      right: 0;
+      top: 45px;
+      background: #14161c;
       border: 1px solid var(--border);
       list-style: none;
       padding: 6px;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       display: none;
       min-width: 130px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 101;
     }
-    #langMenu.show { display: block; animation: slideUp 0.2s ease forwards; }
-    #langMenu li { padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--muted); }
-    #langMenu li:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
 
-    /* --- HERO & SECTIONS --- */
+    #langMenu.show {
+      display: block;
+      animation: fadeIn 0.2s ease forwards;
+    }
+
+    #langMenu li {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    #langMenu li:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+    }
+
+    main {
+      flex: 1;
+    }
+
     .hero {
       text-align: center;
-      padding: 120px 20px 60px;
-      max-width: 800px;
+      padding: 80px 20px 40px;
+      max-width: 780px;
       margin: auto;
     }
-    .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 4.5rem);
-      font-weight: 800;
-      margin-bottom: 15px;
-      background: linear-gradient(135deg, #ffffff 40%, var(--muted) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p { color: var(--muted); font-size: 1.2rem; max-width: 600px; margin: auto; }
 
-    section { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-accent);
+      color: var(--accent);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 640px;
+      margin: auto;
+      line-height: 1.7;
+    }
+
+    section {
+      max-width: 1050px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
     h2 {
-      font-size: 1.4rem;
-      margin-bottom: 35px;
+      font-size: 1.25rem;
+      margin-bottom: 28px;
       display: flex;
       align-items: center;
-      gap: 15px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--text);
     }
-    h2::after { content: ""; height: 1px; flex: 1; background: var(--border); }
+
+    h2 i {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    h2::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--border);
+    }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
+      gap: 22px;
     }
 
-    /* --- KARTLAR --- */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 30px;
+      border-radius: var(--radius-md);
+      padding: 26px;
       backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px var(--accent-glow);
+      background: var(--card-hover);
+      border-color: var(--border-accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     }
-    .card-content { flex-grow: 1; }
-    .card b { color: var(--accent); display: block; margin-bottom: 12px; font-size: 1.25rem; font-weight: 600; }
-    .card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
+
+    .card-content {
+      flex-grow: 1;
+    }
+
+    .card b {
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
 
     .links-group {
       display: flex;
@@ -326,111 +420,214 @@
     }
 
     .btn-link {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text);
       text-decoration: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       font-size: 0.85rem;
       font-weight: 600;
       border: 1px solid var(--border);
+      transition: all 0.2s ease;
     }
-    .btn-link:hover { background: var(--text); color: #000000; border-color: var(--text); }
 
-    /* --- DINAMIK KELIME LISTESI ALANI --- */
-    .words-container {
-      background: rgba(255, 255, 255, 0.01);
-      border: 1px dashed var(--border);
-      border-radius: 20px;
-      padding: 25px;
-      margin-top: 20px;
-      display: none; 
-      animation: slideUp 0.3s ease forwards;
+    .btn-link:hover {
+      background: var(--accent);
+      color: #000000;
+      border-color: var(--accent);
+      transform: translateY(-1px);
     }
-    .words-container.active { display: block; }
+
+    .words-container {
+      background: rgba(20, 22, 28, 0.5);
+      border: 1px dashed var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      margin-top: 15px;
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .words-container.active {
+      display: block;
+    }
+
     .words-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       margin-top: 15px;
     }
+
     .word-badge {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: 50px;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       color: var(--text);
       font-weight: 600;
+      transition: all 0.2s ease;
     }
+
     .word-badge:hover {
       border-color: var(--accent);
       color: #000000;
       background: var(--accent);
     }
 
-    /* --- FOOTER & TROLL COPYRIGHT --- */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 20px;
-      text-align: center;
-      margin-top: 80px;
-      background: rgba(10, 12, 16, 0.5);
-    }
-    .copyright-text {
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: color 0.3s ease;
-      display: inline-block;
-    }
-    .copyright-text:hover {
-      color: var(--accent);
-      text-shadow: 0 0 10px var(--accent-glow);
+    .music-player {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 9999;
+      background: rgba(14, 16, 21, 0.9);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.3s ease;
     }
 
-    /* --- TROLL MODAL --- */
+    .music-player:hover {
+      border-color: var(--border-accent);
+    }
+
+    .music-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .music-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    #musicBtn {
+      background: var(--accent);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: #000000;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    #musicBtn:hover {
+      background: var(--accent-hover);
+      transform: scale(1.05);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 20px;
+      text-align: center;
+      margin-top: 60px;
+      background: rgba(8, 9, 11, 0.6);
+    }
+
+    .copyright-text {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.25s ease;
+      display: inline-block;
+    }
+
+    .copyright-text:hover {
+      color: var(--accent);
+    }
+
     #trollModal {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
       z-index: 10001;
       display: none;
       justify-content: center;
       align-items: center;
     }
+
     .modal-box {
-      background: #111318;
-      border: 1px solid var(--accent);
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 500px;
+      background: #12141a;
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      max-width: 480px;
       width: 90%;
-      box-shadow: 0 0 30px var(--accent-glow);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
       text-align: left;
     }
-    .modal-box h3 { color: var(--accent); margin-bottom: 15px; font-weight: 800; font-size: 1.3rem; }
-    .modal-box ul { list-style: none; margin-bottom: 20px; }
-    .modal-box li { color: var(--secondary); margin-bottom: 10px; font-size: 0.95rem; line-height: 1.5; }
+
+    .modal-box h3 {
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-box ul {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+
+    .modal-box li {
+      color: #d1d5db;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .modal-box li::before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
     .close-modal-btn {
       background: var(--accent);
       border: none;
       color: #000;
       font-weight: 800;
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
       float: right;
+      font-size: 0.85rem;
+      transition: background 0.2s ease;
     }
 
-    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .close-modal-btn:hover {
+      background: var(--accent-hover);
+    }
 
-    @media (max-width: 600px) {
-      .hero { padding: 80px 20px 40px; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 60px 20px 30px; }
       .grid { grid-template-columns: 1fr; }
       .nav { padding: 1rem; }
-      .qh-svg-container { width: 200px; height: 140px; }
+      .qh-svg-container { width: 200px; height: 130px; }
     }
   </style>
 </head>
@@ -438,35 +635,28 @@
 <body>
 
 <div id="custom-cursor"></div>
+<div id="cursor-fallback-ring"></div>
 
-<!-- YENİ LIQUID / SIVI SALLANMA YÜKLEME EKRANI -->
 <div id="troll-enter-screen">
   <div class="liquid-loader-wrapper">
-    
     <div class="qh-svg-container">
       <svg width="100%" height="100%" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- QH Köşeli Metin Maskesi -->
           <mask id="qh-text-mask">
             <rect width="100%" height="100%" fill="black" />
-            <text x="50%" y="75%" text-anchor="middle" font-family="'Orbitron', sans-serif" font-size="82" font-weight="900" fill="white" letter-spacing="4">QH</text>
+            <text x="50%" y="75%" text-anchor="middle" font-family="'Orbitron', sans-serif" font-size="80" font-weight="900" fill="white" letter-spacing="4">QH</text>
           </mask>
 
-          <!-- Sıvı Rengi (Sarı Gradient) -->
           <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#ffe600" />
-            <stop offset="100%" stop-color="#ff9900" />
+            <stop offset="0%" stop-color="#f5c211" />
+            <stop offset="100%" stop-color="#d4a007" />
           </linearGradient>
         </defs>
 
-        <!-- Dış Çerçeve (Boş QH) -->
-        <text x="50%" y="75%" text-anchor="middle" font-family="'Orbitron', sans-serif" font-size="82" font-weight="900" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" letter-spacing="4">QH</text>
+        <text x="50%" y="75%" text-anchor="middle" font-family="'Orbitron', sans-serif" font-size="80" font-weight="900" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2.5" letter-spacing="4">QH</text>
 
-        <!-- Sıvı Katmanı (Maskelenmiş) -->
         <g mask="url(#qh-text-mask)">
-          <!-- Yükselen Sıvı Grubu -->
           <g id="liquid-level" transform="translate(0, 110)">
-            <!-- Sıvı Dalga Yüzeyi -->
             <path class="liquid-wave" fill="url(#liquidGrad)" d="M 0,0 C 40,-8 80,8 120,0 C 160,-8 200,8 240,0 C 280,-8 320,8 360,0 V 150 H 0 Z" />
           </g>
         </g>
@@ -480,7 +670,9 @@
 <div id="app-wrapper">
 
   <div class="music-player">
-    <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">QEAT RADIO</span>
+    <div class="music-info">
+      <span class="music-title">QEAT RADIO</span>
+    </div>
     <button id="musicBtn">PLAY</button>
     <audio id="bgAudio" loop preload="auto">
       <source src="sarki.mp3" type="audio/mpeg">
@@ -489,10 +681,12 @@
 
   <header>
     <div class="nav">
-      <div class="logo">QEAT</div>
+      <div class="logo">QEAT<span>.</span></div>
       <div class="nav-controls">
-        <button id="cardsBtn" class="action-btn">Cards</button>
-         
+        <button id="cardsBtn" class="action-btn">
+          <i class="fa-solid fa-layer-group"></i> Cards
+        </button>
+        
         <div class="lang-wrapper" style="position: relative;">
           <button id="langBtn">Language: EN</button>
           <ul id="langMenu">
@@ -504,38 +698,40 @@
     </div>
   </header>
 
-  <section style="margin: 30px auto 0;">
+  <section style="margin: 20px auto 0;">
     <div id="wordsPanel" class="words-container">
-      <h3 id="panelTitle" style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">Cards //</h3>
+      <h3 id="panelTitle" style="color: var(--accent); font-weight: 700; font-size: 1.1rem; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-code-commit"></i> Cards //
+      </h3>
       <div id="wordsList" class="words-grid"></div>
     </div>
   </section>
 
-  <!-- ENGLISH CONTENT -->
   <main id="content-en">
     <div class="hero">
+      <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> Developer & Creator</div>
       <h1>Hi, I'm Qeat</h1>
       <p>I think I've done all sorts of things. 2D games, LuStudio, Discord Bots, Roblox scripts, and more... Well, Qeat. For those wondering what Qeat stands for, it's Q + Eat. That's all, have a nice day!</p>
     </div>
 
     <section>
-      <h2>Main Statistics</h2>
+      <h2><i class="fa-solid fa-chart-simple"></i> Main Statistics</h2>
       <div class="grid">
         <div class="card">
           <div class="card-content">
-            <b>💻 LuStudio & Bot Development</b>
+            <b><i class="fa-solid fa-laptop-code" style="color: var(--accent);"></i> LuStudio & Bot Dev</b>
             <p>I make Discord mods/architecture/bots (I'm not overweight - really!). Oh, and I also have LuStudio. It's a center for creating visual websites, Discord bots, and writing code with AI (use it 🔫 threat!).</p>
           </div>
         </div>
         <div class="card">
           <div class="card-content">
-            <b>📜 Roblox Scripting</b>
+            <b><i class="fa-solid fa-scroll" style="color: var(--accent);"></i> Roblox Scripting</b>
             <p>Engineered high-performance MM2 execution scripts and universal optimization hubs. Specialized in runtime code manipulation and bypass mechanisms. Those who want to use it can check out QeatHub on GitHub.</p>
           </div>
         </div>
         <div class="card">
           <div class="card-content">
-            <b>🏃 Evader</b>
+            <b><i class="fa-solid fa-person-running" style="color: var(--accent);"></i> Evader</b>
             <p>I was a Pro Evade player until a year ago. But it got a bit boring, so I'm starting again. I'm level 140+. I can do E-Hop on mobile!!</p>
           </div>
         </div>
@@ -543,15 +739,17 @@
     </section>
 
     <section>
-      <h2>Projects & Services</h2>
+      <h2><i class="fa-solid fa-cubes"></i> Projects & Services</h2>
       <div class="grid">
         <div class="card">
           <div class="card-content">
             <b>Discord Infrastructure</b>
             <p>Developing heavy-duty modular frameworks and managing backend communications for core operations.</p>
-            <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: qeat.bee</span>
+            <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: 700; font-size: 0.88rem;">Discord: qeat.bee</span>
           </div>
-          <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Connect Profile</a>
+          <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">
+            <i class="fa-brands fa-discord"></i> Connect Profile
+          </a>
         </div>
         <div class="card">
           <div class="card-content">
@@ -578,31 +776,31 @@
     </section>
   </main>
 
-  <!-- TURKISH CONTENT -->
   <main id="content-tr" style="display:none">
     <div class="hero">
+      <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> Geliştirici & Üretici</div>
       <h1>Selam, Ben Qeat</h1>
       <p>Her türlü şeyi yaptım herhalde. 2D oyunlar, LuStudio, Discord Bot'lar, Roblox script ve daha fazlası... Eh işte Qeat. Qeat'in açılımını merak edenler için Q + Eat. Bu kadardı, iyi günler!</p>
     </div>
 
     <section>
-      <h2>Ana İstatistikler</h2>
+      <h2><i class="fa-solid fa-chart-simple"></i> Ana İstatistikler</h2>
       <div class="grid">
         <div class="card">
           <div class="card-content">
-            <b>💻 LuStudio ve Bot Yapımı</b>
+            <b><i class="fa-solid fa-laptop-code" style="color: var(--accent);"></i> LuStudio ve Bot Yapımı</b>
             <p>Discord mod/mimarlık/bot yapıyom (kilolu değilim -gerçektende-) Ha birde yine LuStudio var. Görsel Web sitesi oluşturma / Discord Bot / AI ile kod yazma merkezi (kullanın🔫tehdit)</p>
           </div>
         </div>
         <div class="card">
           <div class="card-content">
-            <b>📜 Roblox Script (MM2 Hilesi)</b>
+            <b><i class="fa-solid fa-scroll" style="color: var(--accent);"></i> Roblox Script (MM2 Hilesi)</b>
             <p>Roblox platformu ve özellikle MM2 için özel geliştirilmiş üst düzey script yazılımları, runtime kod manipülasyonu ve performans optimizasyon sistemleri. Kullanmak isteyenler GitHub üzerinden QeatHub'a bakabilir.</p>
           </div>
         </div>
         <div class="card">
           <div class="card-content">
-            <b>🏃 Evade (130+ Lvl)</b>
+            <b><i class="fa-solid fa-person-running" style="color: var(--accent);"></i> Evade (130+ Lvl)</b>
             <p>1 yıl önceye kadar Pro Evade oyuncusuydum. Ama sıktı biraz yeniden başlıyom. +140 Level'im. Artık mobile E-hop yapabiliyom!!</p>
           </div>
         </div>
@@ -610,15 +808,17 @@
     </section>
 
     <section>
-      <h2>Projeler & Hizmetler</h2>
+      <h2><i class="fa-solid fa-cubes"></i> Projeler & Hizmetler</h2>
       <div class="grid">
         <div class="card">
           <div class="card-content">
             <b>Discord Altyapıları</b>
             <p>Modüler altyapılar geliştiriyor ve topluluk sistemleri için uçtan uca arka plan desteği sunuyorum.</p>
-            <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: bold; font-size: 0.9rem;">Discord: qeat.bee</span>
+            <span style="color:var(--accent); display: block; margin: 10px 0; font-weight: 700; font-size: 0.88rem;">Discord: qeat.bee</span>
           </div>
-          <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">Profille Bağlantı Kur</a>
+          <a href="https://discord.com/users/1386428726744711308" class="btn-link" style="align-self: flex-start;">
+            <i class="fa-brands fa-discord"></i> Profille Bağlantı Kur
+          </a>
         </div>
         <div class="card">
           <div class="card-content">
@@ -653,44 +853,52 @@
 
 </div>
 
-<!-- TROLL TELIF MODAL -->
 <div id="trollModal">
   <div class="modal-box">
-    <h3>⚠️ BABA QEAT TELİF PROTOKOLÜ</h3>
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> BABA QEAT TELİF PROTOKOLÜ</h3>
     <ul>
-      <li>1. Bu sitedeki kodları veya tasarımları çalmaya kalkarsan klavyen kendiliğinden "baba qeat büyüktür" yazmaya başlar.</li>
-      <li>2. LuStudio ve geliştirmeler izinsiz kopyalanamaz, kopyalanırsa faturası doğrudan adrese tebliğ edilir.</li>
-      <li>3. Evade'de 130 seviye altı olanların bu kurallara itiraz etme hakkı yoktur.</li>
-      <li>4. Tüm hakları Baba Qeat'in yetkisi altındadır.</li>
+      <li>Bu sitedeki kodları veya tasarımları çalmaya kalkarsan klavyen kendiliğinden "baba qeat büyüktür" yazmaya başlar.</li>
+      <li>LuStudio ve geliştirmeler izinsiz kopyalanamaz, kopyalanırsa faturası doğrudan adrese tebliğ edilir.</li>
+      <li>Evade'de 130 seviye altı olanların bu kurallara itiraz etme hakkı yoktur.</li>
+      <li>Tüm hakları Baba Qeat'in yetkisi altındadır.</li>
     </ul>
     <button class="close-modal-btn" onclick="closeTrollCopyright()">Anlaşıldı Baba</button>
   </div>
 </div>
 
 <script>
-  // İMLEÇ SCRIPTI
+  // Custom Cursor Track
   const cursor = document.getElementById('custom-cursor');
+  const ring = document.getElementById('cursor-fallback-ring');
+
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
   });
+
   document.addEventListener('mousedown', () => cursor.classList.add('cursor-click'));
   document.addEventListener('mouseup', () => cursor.classList.remove('cursor-click'));
 
-  // --- SIVI DOLMA ANIMASYON KONTROLU ---
+  // Hover states for cursor ring
+  document.querySelectorAll('a, button, .card, .copyright-text, #click-prompt').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  // Liquid Loading Logic
   window.addEventListener('DOMContentLoaded', () => {
     const liquidLevel = document.getElementById('liquid-level');
     const prompt = document.getElementById('click-prompt');
     let startY = 110; 
     let targetY = 10; 
     let startTime = null;
-    const duration = 2200; // Dolma süresi (2.2 saniye)
+    const duration = 2200;
 
     function fillLiquid(timestamp) {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      
-      // Easing (yavaşlayarak dolma)
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       const currentY = startY - ((startY - targetY) * easeProgress);
       
@@ -699,7 +907,6 @@
       if (progress < 1) {
         requestAnimationFrame(fillLiquid);
       } else {
-        // Dolma bitince yazı gözüksün
         prompt.classList.add('ready');
       }
     }
@@ -720,10 +927,10 @@
       audio.play()
         .then(() => { mBtn.textContent = "PAUSE"; })
         .catch(err => console.log("Auto-play blocked:", err));
-    }, 300);
+    }, 280);
   }
 
-  // --- GITHUB FETCH ENGINE ---
+  // GitHub JSON Fetch Engine
   const cardsBtn = document.getElementById('cardsBtn');
   const wordsPanel = document.getElementById('wordsPanel');
   const wordsList = document.getElementById('wordsList');
@@ -737,7 +944,7 @@
 
     try {
       const isTr = document.documentElement.lang === "tr";
-      wordsList.innerHTML = `<span style="color: var(--muted); font-size:0.9rem;">${isTr ? 'Veriler senkronize ediliyor...' : 'Fetching raw data node...'}</span>`;
+      wordsList.innerHTML = `<span style="color: var(--muted); font-size:0.88rem;">${isTr ? 'Veriler senkronize ediliyor...' : 'Fetching data node...'}</span>`;
       wordsPanel.classList.add('active');
 
       const response = await fetch(jsonUrl);
@@ -756,11 +963,11 @@
     } catch (error) {
       console.error(error);
       const isTr = document.documentElement.lang === "tr";
-      wordsList.innerHTML = `<span style="color: #ff4a4a; font-size:0.9rem;">${isTr ? 'Veri çekme başarısız oldu.' : 'Data sync blocked.'}</span>`;
+      wordsList.innerHTML = `<span style="color: #f87171; font-size:0.88rem;">${isTr ? 'Veri çekme başarısız oldu.' : 'Data sync blocked.'}</span>`;
     }
   });
 
-  // --- MUSIC CONTROLLER ---
+  // Audio Control
   const audio = document.getElementById('bgAudio');
   const mBtn = document.getElementById('musicBtn');
 
@@ -769,35 +976,33 @@
     if (audio.paused) {
       audio.play()
         .then(() => { mBtn.textContent = "PAUSE"; })
-        .catch(error => {
-          console.error("Audio error:", error);
-        });
+        .catch(error => console.error("Audio error:", error));
     } else {
       audio.pause();
       mBtn.textContent = "PLAY";
     }
   });
 
-  // --- LANGUAGE SWITCHER ---
+  // Language Switcher
   const en = document.getElementById("content-en");
   const tr = document.getElementById("content-tr");
   const btn = document.getElementById("langBtn");
   const menu = document.getElementById("langMenu");
   const panelTitle = document.getElementById("panelTitle");
 
-  btn.addEventListener("click", (e)=>{
+  btn.addEventListener("click", (e) => {
     e.stopPropagation();
     menu.classList.toggle("show");
   });
 
-  document.querySelectorAll("#langMenu li").forEach(li=>{
-    li.addEventListener("click", ()=>{
+  document.querySelectorAll("#langMenu li").forEach(li => {
+    li.addEventListener("click", () => {
       const isTr = li.dataset.lang === "tr";
       en.style.display = isTr ? "none" : "block";
       tr.style.display = isTr ? "block" : "none";
       btn.textContent = isTr ? "Dil: TR" : "Language: EN";
-      cardsBtn.textContent = isTr ? "Kelimeler" : "Cards";
-      panelTitle.textContent = isTr ? "Kelimeler //" : "Cards //";
+      cardsBtn.innerHTML = isTr ? '<i class="fa-solid fa-layer-group"></i> Kelimeler' : '<i class="fa-solid fa-layer-group"></i> Cards';
+      panelTitle.innerHTML = isTr ? '<i class="fa-solid fa-code-commit"></i> Kelimeler //' : '<i class="fa-solid fa-code-commit"></i> Cards //';
       document.documentElement.lang = isTr ? "tr" : "en";
       menu.classList.remove("show");
     });
@@ -805,7 +1010,7 @@
 
   document.addEventListener("click", () => menu.classList.remove("show"));
 
-  // --- TROLL COPYRIGHT MODAL LOGIC ---
+  // Troll Copyright Modal
   function openTrollCopyright() {
     document.getElementById('trollModal').style.display = 'flex';
   }
