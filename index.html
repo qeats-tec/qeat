@@ -72,10 +72,71 @@
       transform: translate(-20%, -20%) scale(0.82) rotate(-8deg) !important;
     }
 
+    #troll-enter-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      background: rgba(8, 9, 11, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9998;
+    }
+
+    .liquid-loader-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .qh-svg-container {
+      width: 320px;
+      height: 140px;
+      position: relative;
+    }
+
+    .liquid-wave {
+      animation: waveMove 2.2s linear infinite;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-160px); }
+    }
+
+    .screen-flash-bang {
+      animation: flashEffect 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes flashEffect {
+      0% { background-color: rgba(8, 9, 11, 0.96); }
+      30% { background-color: #ffffff; } 
+      100% { background-color: #0b0c0f; opacity: 0; visibility: hidden; }
+    }
+
     #app-wrapper {
+      opacity: 0;
+      transform: translateY(15px);
+      filter: blur(8px);
+      transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    #app-wrapper.loaded {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
     }
 
     header {
@@ -506,6 +567,7 @@
       .hero { padding: 60px 20px 30px; }
       .grid { grid-template-columns: 1fr; }
       .nav { padding: 1rem; }
+      .qh-svg-container { width: 240px; height: 100px; }
     }
   </style>
 </head>
@@ -513,6 +575,35 @@
 <body>
 
 <div id="custom-cursor"></div>
+
+<!-- Intro Yükleme Ekranı -->
+<div id="troll-enter-screen">
+  <div class="liquid-loader-wrapper">
+    <div class="qh-svg-container">
+      <svg width="100%" height="100%" viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <mask id="qeat-text-mask">
+            <rect width="100%" height="100%" fill="black" />
+            <text x="50%" y="70%" text-anchor="middle" font-family="'Orbitron', sans-serif" font-size="62" font-weight="900" fill="white" letter-spacing="2">Qeat</text>
+          </mask>
+
+          <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f5c211" />
+            <stop offset="100%" stop-color="#d4a007" />
+          </linearGradient>
+        </defs>
+
+        <text x="50%" y="70%" text-anchor="middle" font-family="'Orbitron', sans-serif" font-size="62" font-weight="900" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2.5" letter-spacing="2">Qeat</text>
+
+        <g mask="url(#qeat-text-mask)">
+          <g id="liquid-level" transform="translate(0, 110)">
+            <path class="liquid-wave" fill="url(#liquidGrad)" d="M 0,0 C 40,-8 80,8 120,0 C 160,-8 200,8 240,0 C 280,-8 320,8 360,0 V 150 H 0 Z" />
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
 
 <div id="app-wrapper">
 
@@ -722,6 +813,49 @@
 
   document.addEventListener('mousedown', () => cursor.classList.add('cursor-click'));
   document.addEventListener('mouseup', () => cursor.classList.remove('cursor-click'));
+
+  // Otomatik Dolup Açılan Intro Mantığı
+  window.addEventListener('DOMContentLoaded', () => {
+    const liquidLevel = document.getElementById('liquid-level');
+    let startY = 110; 
+    let targetY = 10; 
+    let startTime = null;
+    const duration = 1800; // 1.8 saniyede Qeat yazısı dolacak
+
+    function fillLiquid(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentY = startY - ((startY - targetY) * easeProgress);
+      
+      liquidLevel.setAttribute('transform', `translate(0, ${currentY})`);
+
+      if (progress < 1) {
+        requestAnimationFrame(fillLiquid);
+      } else {
+        // Otomatik Giriş
+        setTimeout(autoEnterPortfolio, 200);
+      }
+    }
+
+    requestAnimationFrame(fillLiquid);
+  });
+
+  function autoEnterPortfolio() {
+    const screen = document.getElementById('troll-enter-screen');
+    const wrapper = document.getElementById('app-wrapper');
+    const audio = document.getElementById('bgAudio');
+    const mBtn = document.getElementById('musicBtn');
+
+    screen.classList.add('screen-flash-bang');
+
+    setTimeout(() => {
+      wrapper.classList.add('loaded');
+      audio.play()
+        .then(() => { mBtn.textContent = "PAUSE"; })
+        .catch(err => console.log("Auto-play engellendi:", err));
+    }, 280);
+  }
 
   // GitHub JSON Fetch Engine
   const cardsBtn = document.getElementById('cardsBtn');
